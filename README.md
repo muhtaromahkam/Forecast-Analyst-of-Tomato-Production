@@ -6,9 +6,8 @@ This repository contains the code and resources for forecasting tomato productio
 
 1. [Introduction](#introduction)
 2. [Methodology](#methodology)
-3. [Repository Structure](#repository-structure)
-4. [Usage](#usage)
-5. [Results](#results)
+3. [Usage](#usage)
+4. [Results](#results)
 
 ### Introduction
 Tomato production forecasting plays a crucial role in ensuring efficient distribution, pricing, and availability of tomatoes in the market. This project focuses on the West Lampung region and employs the ARIMA model to analyze historical tomato production data and predict future production levels.
@@ -25,14 +24,6 @@ The methodology involves the following steps:
 - **Model Evaluation**: The trained model's accuracy is assessed using appropriate metrics and validated with a holdout dataset.
 - **Forecasting**: The model is used to forecast tomato production for a certain period into the future.
 - **Results Interpretation**: The forecasted results are visualized and explained for stakeholders.
-
-### Repository Structure
-/
-├── data/                  # Data files used for the analysis
-├── notebooks/             # R scripts
-├── results/               # Forecasted results, plots, and evaluation metrics
-├── tomato_image.jpg       # Image of a tomato for visual appeal (replace with actual image)
-├── README.md              # Project readme (you are here)
 
 ### Usage
 
