@@ -34,5 +34,5 @@ The methodology involves the following steps:
 
 
 ### Results
-The forecasting results are presented in the results/ directory. Visualizations showcase the predicted tomato production trends for the specified period. Additionally, the evaluation metrics provide insights into the accuracy of the ARIMA model's predictions.
+The forecasting results are presented in the result directory. Visualizations showcase the predicted tomato production trends for the specified period. Additionally, the evaluation metrics provide insights into the accuracy of the ARIMA model's predictions.
 
