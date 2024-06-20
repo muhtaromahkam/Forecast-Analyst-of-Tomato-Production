@@ -1,45 +1,44 @@
-#Mengimport library yang diperlukan
+# Mengimport library yang diperlukan
 library(forecast)
 library(TSA)
 library(tseries)
 library(readxl)
 library(ggplot2)
 
-#Import data dari file lokal
-data1=read_excel("C:/Education/Bahan/Produksi Tomat Lambar 5 Tahun.xlsx", col_types = c("numeric"))
+# Import data dari file lokal
+data1=read_excel("Produksi Tomat Lambar 5 Tahun.xlsx", col_types = c("numeric"))
 data1
 
-#Membuat data menjadi deret waktu
+# Membuat data menjadi format deret waktu
 data1.ts=ts(data1,frequency = 12, start = c(2018,1))
 data1.ts
 
-#Plotting data awal serta plotting dengan menggunakan garis trend
+# Plotting data awal serta plotting dengan menggunakan garis trend
 plot(data1.ts, main="Produksi Tomat Kabupaten Lampung Barat Tahun 2018-2022")
 abline(reg=lm(data1.ts~time(data1.ts)))
 
-#Plot ACF dan Plot PACF untuk melihat apakah data stasioner secara korelogram
+# Plot ACF dan Plot PACF untuk melihat apakah data stasioner secara korelogram
 Acf(data1.ts, main="Produksi Tomat Kabupaten Lampung Barat 2018-2022")
 Pacf(data1.ts, main="Produksi Tomat Kabupaten Lampung Barat 2018-2022")
 
-#Uji Stasioner data terhadap ragam
+# Uji Stasioner data terhadap ragam
 lamda=BoxCox.lambda(data1.ts)
 lamda
 BoxCox.ar(data1.ts)
 
-#Uji Stasioner data terhadap rata-rata
+# Uji Stasioner data terhadap rata-rata
 adf.test(data1.ts)
 kpss.test(data1.ts)
 
-
-#Data didifferencing satu kali
+# Data dilakukan differencing karena data tidak stasioner
 data1.diff1=diff(data1.ts,differences=1)
 plot(data1.diff1)
 
-#Menguji kembali stasioneritas dengan menggunakan uji stasioner
+# Menguji kembali stasioneritas dengan menggunakan uji stasioner
 adf.test(data1.diff1)
 kpss.test(data1.diff1)
 
-#Melihat plot acf dan plot pacf untuk mengidentifikasi model
+# Melihat plot acf dan plot pacf untuk mengidentifikasi model
 Acf(data1.diff1, main="Produksi Tomat Kabupaten Lampung Barat 2018-2022")
 Pacf(data1.diff1, main="Produksi Tomat Kabupaten Lampung Barat 2018-2022")
 
@@ -68,7 +67,7 @@ model_5=Arima(data1.ts,order = c(2,1,1))
 model_5
 model_5$fitted
 
-#Estimasi model yang memiliki nilai akurasi terbaik
+# Estimasi model yang memiliki nilai akurasi terbaik
 MAD_1=mean(abs(data1.ts-model_1$fitted))
 MAD_1
 MAPE_1=mean(abs(data1.ts-model_1$fitted)/data1.ts,na.rm=TRUE)
@@ -113,22 +112,22 @@ MSE_5
 perbandingan_5=c(MAD_5,MAPE_5,MSE_5)
 perbandingan_5
 
-#Membuat perbandingan nilai MAD,MAPE,MSE dari model 1-5
+# Membuat perbandingan nilai MAD,MAPE,MSE dari model 1-5
 perbandingantotal=rbind(perbandingan_1,perbandingan_2,perbandingan_3,perbandingan_4,perbandingan_5)
 perbandingantotal
 
-#Evaluasi parameter model
-#Uji Homogen residual
+# Evaluasi parameter model
+# Uji Homogen residual
 Box.test(model_5$residuals,type = "Ljung")
-#Uji Normalitas residual
+# Uji Normalitas residual
 ks.test(model_5$residuals,"pnorm",mean(model_5$residuals),sd(model_5$residuals))
 
-#peramalan
+# peramalan
 ramalan_1=forecast::forecast(model_5,h=6)
 ramalan_1
 plot(ramalan_1)
 
-#hasil ramalan
+# hasil ramalan
 m=fitted(model_5)^2
 m
 lines(fitted(model_5)^2,col="red")
